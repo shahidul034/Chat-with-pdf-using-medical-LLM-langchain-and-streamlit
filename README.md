@@ -1,5 +1,5 @@
 # Chat-with-pdf-using-LLM-langchain-and-streamlit
-### Install those libary
+### Install those libraries
 ```bash
 conda create -n lang python=3.8
 conda activate lang
@@ -58,13 +58,13 @@ if f is not None:
 else:
     path_in = None
 ```
-This below line helps you to take the prompt for the LLM. It is the input to pass the LLM for inference.
+### This below line helps you to take the prompt for the LLM. It is the input to pass the LLM for inference.
 ```
 prompt = st.text_input("Prompt", placeholder="Enter your prompt here..")
 if "user_prompt_history" not in st.session_state:
     st.session_state["user_prompt_history"] = []
 ```
-Here, we take the LLM model locally, or you can take the model from the huggingface website.
+### Here, we take the LLM model locally, or you can take the model from the huggingface website.
 
 ```
 if "model" not in st.session_state:
@@ -97,7 +97,7 @@ if "model" not in st.session_state:
     llm = HuggingFacePipeline(pipeline = pipe, model_kwargs = {'temperature':0})
     st.session_state["model"] = llm
 ```
-We need to vectorize our pdf file to pass the data to LLM. If the pdf size crosses the LLM context length, it creates an error. We send only relevant chunks to LLM so that it never crosses the token limit. Here, We used huggingface embeddings. We can use OpenAI embeddings, but it needs to API call, which is not free.
+### We need to vectorize our pdf file to pass the data to LLM. If the pdf size crosses the LLM context length, it creates an error. We send only relevant chunks to LLM so that it never crosses the token limit. Here, We used huggingface embeddings. We can use OpenAI embeddings, but it needs to API call, which is not free.
 ```
 if "vectorstore" not in st.session_state and path_in:
     loader=PyPDFLoader(file_path=path_in)
