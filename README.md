@@ -114,3 +114,17 @@ if "vectorstore" not in st.session_state and path_in:
      
     st.session_state["vectorstore"] = new_vectorstore
 ```
+### This session_state helps to store the session input and output.
+```
+if "chat_answers_history" not in st.session_state:
+    st.session_state["chat_answers_history"] = []
+
+if "chat_history" not in st.session_state:
+```
+### We created a conversational LLMChain which takes input vectorised output of pdf file, and they have memory which takes input history and passes to the LLM.
+```
+qa = ConversationalRetrievalChain.from_llm(
+       llm=llm, retriever=new_vectorstore.as_retriever()
+    )
+res=qa({"question": query, "chat_history":chat_history})
+```
