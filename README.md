@@ -7,6 +7,8 @@ conda activate lang
 conda install -c conda-forge cudatoolkit=11.8.0
 pip install nvidia-cudnn-cu11==8.6.0.163
 pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
+pip install 'transformers[torch]'
+pip install autotrain-advanced
 python -m pip install jupyter
 pip install langchain
 pip install streamlit
