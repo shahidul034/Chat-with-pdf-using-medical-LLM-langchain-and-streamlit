@@ -1,4 +1,5 @@
 # Chat-with-pdf-using-LLM-langchain-and-streamlit
+Custom trained LLM on medical data:  https://huggingface.co/shahidul034/Medical_Llama_2
 ![Interface](https://github.com/shahidul034/Chat-with-pdf-using-LLM-langchain-and-streamlit/blob/main/image.png)
 ### Install those libraries
 ```bash
