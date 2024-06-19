@@ -44,7 +44,7 @@ from langchain import PromptTemplate, LLMChain
 from langchain.memory import ConversationBufferMemory
 ```
 
-### 🎯Read the file path so that we can chat with LLM using this file. 
+> 🎯Read the file path so that we can chat with LLM using this file. 
 
 ```
 def get_file_path(uploaded_file):
@@ -63,13 +63,13 @@ if f is not None:
 else:
     path_in = None
 ```
-### 🎯This below line helps you to take the prompt for the LLM. It is the input to pass the LLM for inference.
+> 🎯This below line helps you to take the prompt for the LLM. It is the input to pass the LLM for inference.
 ```
 prompt = st.text_input("Prompt", placeholder="Enter your prompt here..")
 if "user_prompt_history" not in st.session_state:
     st.session_state["user_prompt_history"] = []
 ```
-### 🎯Here, we take the LLM model locally, or you can take the model from the huggingface website. We load the model in 4-bit quantization so that we can run our model on a low-configuration PC (GPU: 12GB for inference).
+> 🎯Here, we take the LLM model locally, or you can take the model from the huggingface website. We load the model in 4-bit quantization so that we can run our model on a low-configuration PC (GPU: 12GB for inference).
 
 ```
 if "model" not in st.session_state:
@@ -102,7 +102,7 @@ if "model" not in st.session_state:
     llm = HuggingFacePipeline(pipeline = pipe, model_kwargs = {'temperature':0})
     st.session_state["model"] = llm
 ```
-### 🎯In order to effectively utilize our PDF data with a Large Language Model (LLM), it is essential to vectorize the content of the PDF. Given the constraints imposed by the LLM's context length, it is crucial to ensure that the data provided does not exceed this limit to prevent errors. To achieve this, we employ a process of converting the entire PDF file into vector chunks and only sending the relevant chunks to the LLM, thereby avoiding any issues related to token limits. To vectorize the PDF content, we utilize the "sentence-transformers/all-mpnet-base-v2" model, a state-of-the-art open-source vector embedding model. Additionally, we leverage FAISS (Facebook AI Similarity Search), an open-source library that facilitates efficient similarity search and clustering of dense vectors. This combination allows us to accurately and efficiently convert PDF content into vector embeddings. The vector embeddings are then saved locally, which not only optimizes the process by saving time during repeated use but also ensures that we do not incur additional costs associated with API calls. Although we have the option to use OpenAI embeddings, this approach requires API calls that are not free, making the use of open-source alternatives more practical and cost-effective for our purposes.
+> 🎯In order to effectively utilize our PDF data with a Large Language Model (LLM), it is essential to vectorize the content of the PDF. Given the constraints imposed by the LLM's context length, it is crucial to ensure that the data provided does not exceed this limit to prevent errors. To achieve this, we employ a process of converting the entire PDF file into vector chunks and only sending the relevant chunks to the LLM, thereby avoiding any issues related to token limits. To vectorize the PDF content, we utilize the "sentence-transformers/all-mpnet-base-v2" model, a state-of-the-art open-source vector embedding model. Additionally, we leverage FAISS (Facebook AI Similarity Search), an open-source library that facilitates efficient similarity search and clustering of dense vectors. This combination allows us to accurately and efficiently convert PDF content into vector embeddings. The vector embeddings are then saved locally, which not only optimizes the process by saving time during repeated use but also ensures that we do not incur additional costs associated with API calls. Although we have the option to use OpenAI embeddings, this approach requires API calls that are not free, making the use of open-source alternatives more practical and cost-effective for our purposes.
 ```
 if "vectorstore" not in st.session_state and path_in:
     loader=PyPDFLoader(file_path=path_in)
@@ -119,14 +119,14 @@ if "vectorstore" not in st.session_state and path_in:
      
     st.session_state["vectorstore"] = new_vectorstore
 ```
-### 🎯This session_state helps to store the session input and output.
+> 🎯This session_state helps to store the session input and output.
 ```
 if "chat_answers_history" not in st.session_state:
     st.session_state["chat_answers_history"] = []
 
 if "chat_history" not in st.session_state:
 ```
-### 🎯We have developed a conversational LLMChain designed to process the vectorized output of PDF files. This LLMChain integrates memory capabilities, allowing it to retain input history and effectively pass this context to the LLM.
+> 🎯We have developed a conversational LLMChain designed to process the vectorized output of PDF files. This LLMChain integrates memory capabilities, allowing it to retain input history and effectively pass this context to the LLM.
 ```
 qa = ConversationalRetrievalChain.from_llm(
        llm=llm, retriever=new_vectorstore.as_retriever()
